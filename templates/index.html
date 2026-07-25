@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindCanvas — AI that sees your mind</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --container: #13131f;
+            --card: #1a1a2e;
+            --text: #e8e8ff;
+            --subtext: #8888bb;
+            --primary: #7c6fff;
+            --secondary: #ff6f91;
+            --success: #06d6a0;
+            --border: #2a2a4a;
+            --input-bg: #0f0f1a;
+        }
+        [data-theme="light"] {
+            --bg: #f0f0ff;
+            --container: #ffffff;
+            --card: #f5f5ff;
+            --text: #1a1a2e;
+            --subtext: #555577;
+            --primary: #5b4fff;
+            --border: #e0e0f0;
+            --input-bg: #f0f0ff;
+        }
+        [data-theme="pride"] {
+            --bg: #0a0a0f;
+            --container: #13131f;
+            --card: #1a1a2e;
+            --text: #ffffff;
+            --subtext: #cccccc;
+            --border: transparent;
+            --input-bg: #0f0f1a;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* ── Theme bar ── */
+        .theme-bar {
+            position: fixed; top: 14px; right: 20px; z-index: 1000;
+            display: flex; gap: 2px;
+            background: var(--container); padding: 5px 8px;
+            border-radius: 30px; border: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .theme-btn {
+            background: none; border: none; cursor: pointer;
+            font-size: 1rem; padding: 3px 5px; border-radius: 20px;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .theme-btn:hover { background: var(--input-bg); transform: scale(1.15); }
+
+        /* ── Hero ── */
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem 2rem;
+        }
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #7c6fff, #ff6f91, #06d6a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        [data-theme="pride"] .hero-title {
+            background: linear-gradient(135deg,#ff0000,#ff7700,#ffff00,#00cc00,#0000ff,#8b00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-sub {
+            color: var(--subtext); font-size: 1.05rem; margin-bottom: 2rem;
+        }
+
+        /* ── Mode selector ── */
+        .mode-selector {
+            display: flex; gap: 1rem; justify-content: center;
+            margin-bottom: 2.5rem; flex-wrap: wrap; padding: 0 1rem;
+        }
+        .mode-btn {
+            padding: 0.8rem 2rem;
+            border: 2px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            border-radius: 50px;
+            font-size: 1rem; font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .mode-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(124,111,255,0.3); }
+        .mode-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 25px rgba(124,111,255,0.4);
+        }
+        .mode-btn.active.psych {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            box-shadow: 0 4px 25px rgba(255,111,145,0.4);
+        }
+
+        /* ── Main container ── */
+        .main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1rem 4rem;
+        }
+
+        /* ── Card ── */
+        .card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.5s ease-out;
+        }
+        [data-theme="pride"] .card {
+            border: 2px solid transparent;
+            background: linear-gradient(#1a1a2e,#1a1a2e) padding-box,
+                        linear-gradient(135deg,#ff0000,#ff7700,#ffff00,#00cc00,#0000ff,#8b00ff) border-box;
+        }
+
+        /* ── Inputs ── */
+        .input-label {
+            display: block; font-size: 0.9rem; font-weight: 600;
+            color: var(--text); margin-bottom: 0.5rem;
+        }
+        .input-field {
+            width: 100%; padding: 0.9rem 1.2rem;
+            background: var(--input-bg); border: 1px solid var(--border);
+            border-radius: 12px; color: var(--text); font-size: 0.95rem;
+            outline: none; transition: border 0.2s, box-shadow 0.2s;
+            resize: none;
+        }
+        .input-field:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124,111,255,0.15);
+        }
+
+        /* ── Buttons ── */
+        .btn {
+            width: 100%; padding: 1rem;
+            border: none; border-radius: 14px;
+            font-size: 1rem; font-weight: 700;
+            cursor: pointer; transition: all 0.2s;
+            margin-top: 1rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #7c6fff, #9b59ff);
+            color: white;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(124,111,255,0.5); }
+        .btn-psych {
+            background: linear-gradient(135deg, #ff6f91, #ff4d6d);
+            color: white;
+        }
+        .btn-psych:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(255,111,145,0.5); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        /* ── Question card ── */
+        .question-card {
+            background: var(--input-bg);
+            border-radius: 16px; padding: 1.2rem;
+            border: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+        .question-number {
+            font-size: 0.78rem; font-weight: 700;
+            color: var(--secondary); margin-bottom: 0.4rem;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .question-text {
+            font-size: 0.95rem; font-weight: 600;
+            color: var(--text); margin-bottom: 0.7rem;
+        }
+
+        /* ── Result ── */
+        .result-card {
+            background: var(--card);
+            border-radius: 24px; padding: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.6s ease-out;
+        }
+        .result-image-wrap {
+            width: 100%; border-radius: 16px; overflow: hidden;
+            margin-bottom: 1.5rem; position: relative;
+            background: var(--input-bg);
+            min-height: 300px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .result-image {
+            width: 100%; border-radius: 16px;
+            display: block; animation: fadeIn 0.8s ease-out;
+        }
+        .image-loading {
+            text-align: center; color: var(--subtext);
+            padding: 3rem;
+        }
+        .image-loading-spinner {
+            width: 40px; height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        .enhanced-prompt {
+            background: var(--input-bg);
+            border-radius: 12px; padding: 1rem;
+            font-size: 0.83rem; color: var(--subtext);
+            border-left: 3px solid var(--primary);
+            margin-bottom: 1rem; line-height: 1.6;
+        }
+        .personality-box {
+            background: linear-gradient(135deg, rgba(255,111,145,0.08), rgba(124,111,255,0.08));
+            border: 1px solid rgba(255,111,145,0.2);
+            border-radius: 16px; padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .personality-title {
+            font-size: 0.82rem; font-weight: 700;
+            color: var(--secondary); margin-bottom: 0.5rem;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .personality-text {
+            font-size: 0.95rem; color: var(--text);
+            line-height: 1.7;
+        }
+        .try-again-btn {
+            width: 100%; padding: 0.8rem;
+            background: none; border: 2px solid var(--border);
+            border-radius: 12px; color: var(--subtext);
+            font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; transition: all 0.2s;
+            margin-top: 1rem;
+        }
+        .try-again-btn:hover { border-color: var(--primary); color: var(--text); }
+
+        /* ── Spinner ── */
+        .spinner {
+            display: inline-block; width: 18px; height: 18px;
+            border: 2px solid rgba(255,255,255,0.3); border-top-color: white;
+            border-radius: 50%; animation: spin 0.7s linear infinite;
+            vertical-align: middle; margin-right: 8px;
+        }
+
+        /* ── Info chips ── */
+        .info-chips {
+            display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem;
+        }
+        .chip {
+            background: var(--input-bg); padding: 0.3rem 0.8rem;
+            border-radius: 20px; font-size: 0.78rem;
+            color: var(--subtext); border: 1px solid var(--border);
+        }
+
+        /* ── Animations ── */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Mobile ── */
+        @media (max-width: 768px) {
+            .hero { padding: 3.5rem 1rem 1.5rem; }
+            .card, .result-card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+<!-- Theme bar -->
+<div class="theme-bar">
+    <button class="theme-btn" onclick="setTheme('light')" title="Light">☀️</button>
+    <button class="theme-btn" onclick="setTheme('dark')"  title="Dark">🌙</button>
+    <button class="theme-btn" onclick="setTheme('pride')" title="Pride">🏳️‍🌈</button>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+    <div class="hero-title">🎨 MindCanvas</div>
+    <div class="hero-sub">AI that turns your thoughts and mind into art</div>
+
+    <!-- Mode selector -->
+    <div class="mode-selector">
+        <button class="mode-btn active" id="btn-imagine" onclick="setMode('imagine')">
+            🎨 Imagine It
+        </button>
+        <button class="mode-btn psych" id="btn-psych" onclick="setMode('psych')">
+            🧠 Read My Mind
+        </button>
+    </div>
+</div>
+
+<!-- Main -->
+<div class="main" id="main-content">
+
+    <!-- MODE 1: Imagine It -->
+    <div id="mode-imagine">
+        <div class="card">
+            <label class="input-label">✨ What do you want to imagine?</label>
+            <textarea class="input-field" id="imagine-input" rows="3"
+                placeholder="e.g. A lonely astronaut sitting on the moon looking at Earth... or just type anything!"
+                onkeydown="if(event.ctrlKey && event.key==='Enter') generateImage()"></textarea>
+            <small style="color:var(--subtext);font-size:0.78rem;margin-top:6px;display:block;">
+                💡 Ctrl + Enter to generate · Be as creative as you want!
+            </small>
+            <button class="btn btn-primary" id="imagine-btn" onclick="generateImage()">
+                🎨 Generate Image
+            </button>
+        </div>
+
+        <div id="imagine-result" style="display:none;">
+            <div class="result-card">
+                <div class="result-image-wrap" id="imagine-image-wrap">
+                    <div class="image-loading">
+                        <div class="image-loading-spinner"></div>
+                        <p>AI is painting your imagination...</p>
+                        <small style="opacity:0.6;">Takes 10-20 seconds</small>
+                    </div>
+                </div>
+                <div class="enhanced-prompt" id="imagine-enhanced-prompt"></div>
+                <button class="try-again-btn" onclick="resetImagine()">🔄 Try Another</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODE 2: Read My Mind -->
+    <div id="mode-psych" style="display:none;">
+        <div id="psych-questions">
+            <div class="card">
+                <div style="margin-bottom:1.5rem;">
+                    <div style="font-size:1.1rem;font-weight:700;margin-bottom:0.3rem;">🧠 Answer honestly</div>
+                    <div style="color:var(--subtext);font-size:0.88rem;">The AI will analyse your psychology and paint your inner mind as a unique artwork</div>
+                </div>
+
+                <!-- Question 1 -->
+                <div class="question-card">
+                    <div class="question-number">Question 1 of 5</div>
+                    <div class="question-text">If your emotions right now were weather, what would it be?</div>
+                    <input type="text" class="input-field" id="q1"
+                        placeholder="e.g. A storm that's slowly clearing up...">
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-card">
+                    <div class="question-number">Question 2 of 5</div>
+                    <div class="question-text">You're alone at 3AM and can't sleep. What are you thinking about?</div>
+                    <input type="text" class="input-field" id="q2"
+                        placeholder="e.g. Whether I'm making the right choices in life...">
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-card">
+                    <div class="question-number">Question 3 of 5</div>
+                    <div class="question-text">Pick one word that secretly describes you — the real you, not the one you show people</div>
+                    <input type="text" class="input-field" id="q3"
+                        placeholder="e.g. Lost, Burning, Searching, Quiet...">
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-card">
+                    <div class="question-number">Question 4 of 5</div>
+                    <div class="question-text">What's something you want deeply but are afraid to say out loud?</div>
+                    <input type="text" class="input-field" id="q4"
+                        placeholder="e.g. To be truly understood by someone...">
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-card">
+                    <div class="question-number">Question 5 of 5</div>
+                    <div class="question-text">If your life was a color palette right now, what colors would it have?</div>
+                    <input type="text" class="input-field" id="q5"
+                        placeholder="e.g. Deep blue, some grey, but hints of gold...">
+                </div>
+
+                <button class="btn btn-psych" id="psych-btn" onclick="analyzeMind()">
+                    🧠 Read My Mind
+                </button>
+            </div>
+        </div>
+
+        <!-- Psychology Result -->
+        <div id="psych-result" style="display:none;">
+            <div class="result-card">
+                <div style="text-align:center;margin-bottom:1.5rem;">
+                    <div style="font-size:1.3rem;font-weight:800;">🧠 Your Inner Mind</div>
+                    <div style="color:var(--subtext);font-size:0.88rem;">AI generated artwork of your soul</div>
+                </div>
+
+                <div class="result-image-wrap" id="psych-image-wrap">
+                    <div class="image-loading">
+                        <div class="image-loading-spinner"></div>
+                        <p>AI is reading your mind...</p>
+                        <small style="opacity:0.6;">Analysing your answers & painting your soul</small>
+                    </div>
+                </div>
+
+                <div class="personality-box" id="personality-box" style="display:none;">
+                    <div class="personality-title">🔮 Your Personality Reading</div>
+                    <div class="personality-text" id="personality-text"></div>
+                </div>
+
+                <div class="enhanced-prompt" id="psych-prompt" style="display:none;"></div>
+
+                <button class="try-again-btn" onclick="resetPsych()">🔄 Try Again</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let currentMode = 'imagine';
+
+    // ── Theme ──
+    function setTheme(t) {
+        document.body.setAttribute('data-theme', t);
+        localStorage.setItem('mc-theme', t);
+    }
+    setTheme(localStorage.getItem('mc-theme') || 'dark');
+
+    // ── Mode switcher ──
+    // This shows/hides the two modes
+    function setMode(mode) {
+        currentMode = mode;
+        document.getElementById('mode-imagine').style.display = mode === 'imagine' ? 'block' : 'none';
+        document.getElementById('mode-psych').style.display   = mode === 'psych'   ? 'block' : 'none';
+        document.getElementById('btn-imagine').classList.toggle('active', mode === 'imagine');
+        document.getElementById('btn-psych').classList.toggle('active', mode === 'psych');
+    }
+
+    // ── MODE 1: Generate Image ──
+    // Logic: get user text → send to /generate → show result
+    async function generateImage() {
+        const prompt = document.getElementById('imagine-input').value.trim();
+        if (!prompt) { document.getElementById('imagine-input').focus(); return; }
+
+        const btn = document.getElementById('imagine-btn');
+        btn.innerHTML = '<span class="spinner"></span> Creating...';
+        btn.disabled = true;
+
+        // Show result section with loading state
+        document.getElementById('imagine-result').style.display = 'block';
+        document.getElementById('imagine-image-wrap').innerHTML = `
+            <div class="image-loading">
+                <div class="image-loading-spinner"></div>
+                <p>AI is enhancing your idea...</p>
+                <small style="opacity:0.6;">Takes 10-20 seconds</small>
+            </div>`;
+        document.getElementById('imagine-enhanced-prompt').textContent = '';
+
+        try {
+            // Send to Flask backend
+            const res  = await fetch('/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt })
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                // Show the enhanced prompt Gemini created
+                document.getElementById('imagine-enhanced-prompt').textContent =
+                    '✨ AI enhanced your prompt: ' + data.enhanced_prompt;
+
+                // Load image — we use an Image object to detect when it's loaded
+                const img = new Image();
+                img.onload = () => {
+                    document.getElementById('imagine-image-wrap').innerHTML =
+                        `<img src="${data.image_url}" class="result-image" alt="Generated">`;
+                };
+                img.onerror = () => {
+                    // Sometimes Pollinations takes time — retry after 3 seconds
+                    setTimeout(() => {
+                        document.getElementById('imagine-image-wrap').innerHTML =
+                            `<img src="${data.image_url}&refresh=1" class="result-image" alt="Generated">`;
+                    }, 3000);
+                };
+                img.src = data.image_url;
+            } else {
+                document.getElementById('imagine-image-wrap').innerHTML =
+                    `<div class="image-loading"><p>❌ Error: ${data.error}</p></div>`;
+            }
+        } catch(e) {
+            document.getElementById('imagine-image-wrap').innerHTML =
+                `<div class="image-loading"><p>❌ Something went wrong. Try again!</p></div>`;
+        }
+
+        btn.innerHTML = '🎨 Generate Image';
+        btn.disabled = false;
+    }
+
+    function resetImagine() {
+        document.getElementById('imagine-result').style.display = 'none';
+        document.getElementById('imagine-input').value = '';
+        document.getElementById('imagine-input').focus();
+    }
+
+    // ── MODE 2: Analyze Mind ──
+    // Logic: collect 5 answers → send to /analyze → show personality + image
+    async function analyzeMind() {
+        const questions = [
+            "If your emotions right now were weather, what would it be?",
+            "You're alone at 3AM and can't sleep. What are you thinking about?",
+            "Pick one word that secretly describes you — the real you",
+            "What's something you want deeply but are afraid to say out loud?",
+            "If your life was a color palette right now, what colors would it have?"
+        ];
+
+        // Collect answers
+        const answers = [
+            document.getElementById('q1').value.trim(),
+            document.getElementById('q2').value.trim(),
+            document.getElementById('q3').value.trim(),
+            document.getElementById('q4').value.trim(),
+            document.getElementById('q5').value.trim(),
+        ];
+
+        // Check all answers filled
+        const empty = answers.findIndex(a => !a);
+        if (empty !== -1) {
+            document.getElementById(`q${empty+1}`).focus();
+            return;
+        }
+
+        const btn = document.getElementById('psych-btn');
+        btn.innerHTML = '<span class="spinner"></span> Reading your mind...';
+        btn.disabled = true;
+
+        // Show result, hide questions
+        document.getElementById('psych-questions').style.display = 'none';
+        document.getElementById('psych-result').style.display = 'block';
+        document.getElementById('personality-box').style.display = 'none';
+        document.getElementById('psych-prompt').style.display = 'none';
+        document.getElementById('psych-image-wrap').innerHTML = `
+            <div class="image-loading">
+                <div class="image-loading-spinner"></div>
+                <p>AI is reading your mind...</p>
+                <small style="opacity:0.6;">Analysing your soul & painting it</small>
+            </div>`;
+
+        try {
+            const res  = await fetch('/analyze', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ questions, answers })
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                // Show personality reading
+                document.getElementById('personality-text').textContent = data.personality;
+                document.getElementById('personality-box').style.display = 'block';
+
+                // Show image prompt
+                document.getElementById('psych-prompt').textContent = '🎨 Image prompt: ' + data.image_prompt;
+                document.getElementById('psych-prompt').style.display = 'block';
+
+                // Load mind image
+                const img = new Image();
+                img.onload = () => {
+                    document.getElementById('psych-image-wrap').innerHTML =
+                        `<img src="${data.image_url}" class="result-image" alt="Your Mind">`;
+                };
+                img.onerror = () => {
+                    setTimeout(() => {
+                        document.getElementById('psych-image-wrap').innerHTML =
+                            `<img src="${data.image_url}&r=1" class="result-image" alt="Your Mind">`;
+                    }, 3000);
+                };
+                img.src = data.image_url;
+            } else {
+                document.getElementById('psych-image-wrap').innerHTML =
+                    `<div class="image-loading"><p>❌ Error: ${data.error}</p></div>`;
+            }
+        } catch(e) {
+            document.getElementById('psych-image-wrap').innerHTML =
+                `<div class="image-loading"><p>❌ Something went wrong!</p></div>`;
+        }
+
+        btn.innerHTML = '🧠 Read My Mind';
+        btn.disabled = false;
+    }
+
+    function resetPsych() {
+        document.getElementById('psych-result').style.display = 'none';
+        document.getElementById('psych-questions').style.display = 'block';
+        document.getElementById('q1').value = '';
+        document.getElementById('q2').value = '';
+        document.getElementById('q3').value = '';
+        document.getElementById('q4').value = '';
+        document.getElementById('q5').value = '';
+    }
+</script>
+</body>
+</html>
