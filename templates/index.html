@@ -7,251 +7,120 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
-
-        body {
-            min-height: 100vh;
-            color: #e8e8ff;
-            transition: background 1.5s ease;
-        }
-
-        /* Imagine It background — calm dark cyan/blue */
-        body.mode-imagine {
-            background: linear-gradient(135deg, #050d1a, #0a1828, #051520, #080d1f);
-        }
-
-        /* Read My Mind background — calm dark pink/purple */
-        body.mode-psych {
-            background: linear-gradient(135deg, #1a0510, #200a18, #150515, #1a0a20);
-        }
-
-        /* After image generates — gradient from image colors */
-        body.has-image {
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
-        }
-
+        body { min-height:100vh; color:#e8e8ff; transition:background 1.5s ease; }
+        body.mode-imagine { background:linear-gradient(135deg,#050d1a,#0a1828,#051520,#080d1f); }
+        body.mode-psych   { background:linear-gradient(135deg,#1a0510,#200a18,#150515,#1a0a20); }
+        body.has-image    { background-size:400% 400%; animation:gradientShift 8s ease infinite; }
         @keyframes gradientShift {
-            0%   { background-position: 0% 50%; }
-            50%  { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0%   { background-position:0% 50%; }
+            50%  { background-position:100% 50%; }
+            100% { background-position:0% 50%; }
         }
-
         .overlay {
-            min-height: 100vh;
-            background: rgba(0,0,0,0.45);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem 1rem;
+            min-height:100vh; background:rgba(0,0,0,0.45);
+            display:flex; flex-direction:column; align-items:center; padding:2rem 1rem;
         }
-
-        .hero { text-align: center; margin-bottom: 2rem; }
-
-        .hero-title {
-            font-size: clamp(2.2rem, 6vw, 4rem);
-            font-weight: 800;
-            margin-bottom: 0.4rem;
-            transition: color 1s ease;
-        }
-
-        /* Imagine It title — calm cyan */
-        .hero-title.cyan { color: #5bc8e8; }
-
-        /* Read My Mind title — calm pink */
-        .hero-title.pink { color: #e87aaa; }
-
-        .hero-sub { color: rgba(255,255,255,0.5); font-size: 1rem; transition: all 0.5s; }
-
-        .mode-selector {
-            display: flex; gap: 0.8rem;
-            justify-content: center;
-            margin-bottom: 2rem; flex-wrap: wrap;
-        }
+        .hero { text-align:center; margin-bottom:2rem; }
+        .hero-title { font-size:clamp(2.2rem,6vw,4rem); font-weight:800; margin-bottom:0.4rem; transition:color 1s ease; }
+        .hero-title.cyan { color:#5bc8e8; }
+        .hero-title.pink { color:#e87aaa; }
+        .hero-sub { color:rgba(255,255,255,0.5); font-size:1rem; }
+        .mode-selector { display:flex; gap:0.8rem; justify-content:center; margin-bottom:2rem; flex-wrap:wrap; }
         .mode-btn {
-            padding: 0.7rem 1.8rem;
-            border: 2px solid rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.05);
-            color: rgba(255,255,255,0.6);
-            border-radius: 50px;
-            font-size: 0.95rem; font-weight: 600;
-            cursor: pointer; transition: all 0.3s;
-            backdrop-filter: blur(10px);
+            padding:0.7rem 1.8rem; border:2px solid rgba(255,255,255,0.15);
+            background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.6);
+            border-radius:50px; font-size:0.95rem; font-weight:600;
+            cursor:pointer; transition:all 0.3s; backdrop-filter:blur(10px);
         }
-        .mode-btn:hover { transform: translateY(-2px); }
-
-        .mode-btn.active-imagine {
-            background: rgba(91,200,232,0.12);
-            border-color: #5bc8e8;
-            color: #5bc8e8;
-            box-shadow: 0 4px 20px rgba(91,200,232,0.2);
-        }
-
-        .mode-btn.active-psych {
-            background: rgba(232,122,170,0.12);
-            border-color: #e87aaa;
-            color: #e87aaa;
-            box-shadow: 0 4px 20px rgba(232,122,170,0.2);
-        }
-
-        .main { width: 100%; max-width: 680px; }
-
+        .mode-btn:hover { transform:translateY(-2px); }
+        .mode-btn.active-imagine { background:rgba(91,200,232,0.12); border-color:#5bc8e8; color:#5bc8e8; box-shadow:0 4px 20px rgba(91,200,232,0.2); }
+        .mode-btn.active-psych   { background:rgba(232,122,170,0.12); border-color:#e87aaa; color:#e87aaa; box-shadow:0 4px 20px rgba(232,122,170,0.2); }
+        .main { width:100%; max-width:680px; }
         .card {
-            background: rgba(255,255,255,0.06);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 24px;
-            padding: 1.8rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 0.5s ease-out;
+            background:rgba(255,255,255,0.06); backdrop-filter:blur(20px);
+            border:1px solid rgba(255,255,255,0.1); border-radius:24px;
+            padding:1.8rem; margin-bottom:1rem; animation:fadeInUp 0.5s ease-out;
         }
-
-        .card-imagine { border-color: rgba(91,200,232,0.15); }
-        .card-psych   { border-color: rgba(232,122,170,0.15); }
-
+        .card-imagine { border-color:rgba(91,200,232,0.15); }
+        .card-psych   { border-color:rgba(232,122,170,0.15); }
         .result-image-wrap {
-            width: 100%; border-radius: 20px; overflow: hidden;
-            margin-bottom: 1rem; position: relative;
-            min-height: 280px;
-            background: rgba(255,255,255,0.04);
-            display: flex; align-items: center; justify-content: center;
-            border: 1px solid rgba(255,255,255,0.08);
+            width:100%; border-radius:20px; overflow:hidden; margin-bottom:1rem;
+            min-height:280px; background:rgba(255,255,255,0.04);
+            display:flex; align-items:center; justify-content:center;
+            border:1px solid rgba(255,255,255,0.08);
         }
-        .imagine-wrap { border-color: rgba(91,200,232,0.15); }
-        .psych-wrap   { border-color: rgba(232,122,170,0.15); }
-
+        .imagine-wrap { border-color:rgba(91,200,232,0.15); }
+        .psych-wrap   { border-color:rgba(232,122,170,0.15); }
         .result-image { width:100%; border-radius:20px; display:block; animation:fadeIn 0.8s ease-out; }
-
         .image-loading { text-align:center; color:rgba(255,255,255,0.4); padding:3rem 1rem; }
         .image-loading-spinner {
-            width:44px; height:44px;
-            border:3px solid rgba(255,255,255,0.08);
-            border-radius:50%; animation:spin 1s linear infinite;
-            margin:0 auto 1rem;
+            width:44px; height:44px; border:3px solid rgba(255,255,255,0.08);
+            border-radius:50%; animation:spin 1s linear infinite; margin:0 auto 1rem;
         }
-        .spinner-imagine { border-top-color: #5bc8e8; }
-        .spinner-psych   { border-top-color: #e87aaa; }
-
+        .spinner-imagine { border-top-color:#5bc8e8; }
+        .spinner-psych   { border-top-color:#e87aaa; }
         .try-again-btn {
-            width:100%; padding:0.75rem;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius:12px; color:rgba(255,255,255,0.5);
-            font-size:0.9rem; font-weight:600;
+            width:100%; padding:0.75rem; background:rgba(255,255,255,0.05);
+            border:1px solid rgba(255,255,255,0.1); border-radius:12px;
+            color:rgba(255,255,255,0.5); font-size:0.9rem; font-weight:600;
             cursor:pointer; transition:all 0.2s; margin-bottom:1rem;
         }
         .try-again-btn:hover { background:rgba(255,255,255,0.1); color:white; }
-
-        .input-label {
-            display:block; font-size:0.88rem; font-weight:600;
-            color:rgba(255,255,255,0.6); margin-bottom:0.5rem;
-        }
+        .input-label { display:block; font-size:0.88rem; font-weight:600; color:rgba(255,255,255,0.6); margin-bottom:0.5rem; }
         .input-field {
-            width:100%; padding:0.9rem 1.2rem;
-            background:rgba(255,255,255,0.05);
-            border:1px solid rgba(255,255,255,0.1);
-            border-radius:12px; color:white; font-size:0.95rem;
-            outline:none; transition:border 0.2s, box-shadow 0.2s; resize:none;
+            width:100%; padding:0.9rem 1.2rem; background:rgba(255,255,255,0.05);
+            border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:white;
+            font-size:0.95rem; outline:none; transition:border 0.2s,box-shadow 0.2s; resize:none;
         }
         .input-field::placeholder { color:rgba(255,255,255,0.25); }
-        .input-field.cyan:focus {
-            border-color: rgba(91,200,232,0.5);
-            box-shadow: 0 0 0 3px rgba(91,200,232,0.08);
-        }
-        .input-field.pink:focus {
-            border-color: rgba(232,122,170,0.5);
-            box-shadow: 0 0 0 3px rgba(232,122,170,0.08);
-        }
-
+        .input-field.cyan:focus { border-color:rgba(91,200,232,0.5); box-shadow:0 0 0 3px rgba(91,200,232,0.08); }
+        .input-field.pink:focus { border-color:rgba(232,122,170,0.5); box-shadow:0 0 0 3px rgba(232,122,170,0.08); }
         .btn {
-    padding:1rem; border:none; border-radius:14px;
-    font-size:1rem; font-weight:700;
-    cursor:pointer; transition:all 0.2s; margin-top:0.8rem;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-}
+            padding:1rem; border:none; border-radius:14px; font-size:1rem; font-weight:700;
+            cursor:pointer; transition:all 0.2s; margin-top:0.8rem;
+            touch-action:manipulation; -webkit-tap-highlight-color:transparent;
+        }
         .btn-full { width:100%; }
-
-        .btn-imagine {
-            background: linear-gradient(135deg, #2a8aaa, #5bc8e8);
-            color: #000;
-            box-shadow: 0 4px 20px rgba(91,200,232,0.25);
-        }
+        .btn-imagine { background:linear-gradient(135deg,#2a8aaa,#5bc8e8); color:#000; box-shadow:0 4px 20px rgba(91,200,232,0.25); }
         .btn-imagine:hover { transform:translateY(-2px); box-shadow:0 6px 30px rgba(91,200,232,0.4); }
-
-        .btn-psych {
-            background: linear-gradient(135deg, #b84a7a, #e87aaa);
-            color: white;
-            box-shadow: 0 4px 20px rgba(232,122,170,0.25);
-        }
+        .btn-psych { background:linear-gradient(135deg,#b84a7a,#e87aaa); color:white; box-shadow:0 4px 20px rgba(232,122,170,0.25); }
         .btn-psych:hover { transform:translateY(-2px); box-shadow:0 6px 30px rgba(232,122,170,0.4); }
-
-        /* Expose Me — special calm teal-green glow */
         .btn-expose {
-            background: linear-gradient(135deg, #0a8a6a, #0abf8a);
-            color: white;
-            box-shadow: 0 4px 20px rgba(10,191,138,0.3);
-            animation: exposePulse 2s ease-in-out infinite;
+            background:linear-gradient(135deg,#0a8a6a,#0abf8a); color:white;
+            box-shadow:0 4px 20px rgba(10,191,138,0.3);
+            animation:exposePulse 2s ease-in-out infinite;
         }
         .btn-expose:hover { transform:translateY(-2px); box-shadow:0 6px 30px rgba(10,191,138,0.5); }
-
         @keyframes exposePulse {
-            0%,100% { box-shadow: 0 4px 20px rgba(10,191,138,0.3); }
-            50%      { box-shadow: 0 4px 35px rgba(10,191,138,0.5); }
+            0%,100% { box-shadow:0 4px 20px rgba(10,191,138,0.3); }
+            50%      { box-shadow:0 4px 35px rgba(10,191,138,0.5); }
         }
-
         .btn:disabled { opacity:0.6; cursor:not-allowed; transform:none; animation:none; }
-
         .btn-row { display:flex; gap:0.8rem; margin-top:0.8rem; min-height:60px; align-items:stretch; }
         .btn-row .btn { margin-top:0; flex:1; }
-
-        .enhanced-prompt {
-            font-size:0.78rem; color:rgba(255,255,255,0.3);
-            margin-top:0.8rem; line-height:1.5; font-style:italic;
-        }
-
-        .question-wrap { transition: opacity 0.2s, transform 0.2s; }
-        .question-number {
-            font-size:0.75rem; font-weight:700; color:#e87aaa;
-            margin-bottom:0.4rem; text-transform:uppercase; letter-spacing:1px;
-        }
-        .question-text {
-            font-size:1.05rem; font-weight:600; color:white;
-            margin-bottom:1rem; line-height:1.5;
-        }
+        .enhanced-prompt { font-size:0.78rem; color:rgba(255,255,255,0.3); margin-top:0.8rem; line-height:1.5; font-style:italic; }
+        .question-wrap { transition:opacity 0.2s,transform 0.2s; }
+        .question-number { font-size:0.75rem; font-weight:700; color:#e87aaa; margin-bottom:0.4rem; text-transform:uppercase; letter-spacing:1px; }
+        .question-text { font-size:1.05rem; font-weight:600; color:white; margin-bottom:1rem; line-height:1.5; }
         .question-progress { display:flex; gap:0.3rem; margin-bottom:1.5rem; }
-        .progress-dot {
-            height:4px; flex:1; border-radius:2px;
-            background:rgba(255,255,255,0.12); transition:background 0.3s;
-        }
+        .progress-dot { height:4px; flex:1; border-radius:2px; background:rgba(255,255,255,0.12); transition:background 0.3s; }
         .progress-dot.done    { background:#e87aaa; }
         .progress-dot.current { background:rgba(232,122,170,0.4); }
-
         .personality-box {
-            background:rgba(232,122,170,0.06);
-            border:1px solid rgba(232,122,170,0.2);
-            border-radius:16px; padding:1.2rem;
-            margin-bottom:1rem; animation:fadeInUp 0.5s ease-out;
+            background:rgba(232,122,170,0.06); border:1px solid rgba(232,122,170,0.2);
+            border-radius:16px; padding:1.2rem; margin-bottom:1rem; animation:fadeInUp 0.5s ease-out;
         }
-        .personality-title {
-            font-size:0.78rem; font-weight:700; color:#e87aaa;
-            margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:1px;
-        }
+        .personality-title { font-size:0.78rem; font-weight:700; color:#e87aaa; margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:1px; }
         .personality-text { font-size:0.95rem; color:rgba(255,255,255,0.8); line-height:1.7; }
-
         .spinner {
             display:inline-block; width:18px; height:18px;
             border:2px solid rgba(255,255,255,0.3); border-top-color:white;
             border-radius:50%; animation:spin 0.7s linear infinite;
             vertical-align:middle; margin-right:8px;
         }
-
-        @keyframes fadeInUp {
-            from { opacity:0; transform:translateY(20px); }
-            to   { opacity:1; transform:translateY(0); }
-        }
-        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-        @keyframes spin { to { transform:rotate(360deg); } }
-
+        @keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes fadeIn   { from { opacity:0; } to { opacity:1; } }
+        @keyframes spin     { to { transform:rotate(360deg); } }
         @media (max-width:768px) {
             .overlay { padding:1.5rem 0.8rem; }
             .card { padding:1.3rem; }
@@ -274,7 +143,7 @@
 
     <div class="main">
 
-        <!-- MODE 1: Imagine It -->
+        <!-- ── MODE 1: Imagine It ── -->
         <div id="mode-imagine">
             <div id="imagine-result" style="display:none;">
                 <div class="card card-imagine">
@@ -289,7 +158,7 @@
                     <label class="input-label">✨ Your idea</label>
                     <textarea class="input-field cyan" id="imagine-input-result" rows="2"
                         placeholder="Type a new idea..."
-                        onkeydown="if(event.ctrlKey && event.key==='Enter') generateFromResult()"></textarea>
+                        onkeydown="if(event.ctrlKey&&event.key==='Enter') generateFromResult()"></textarea>
                     <button class="btn btn-imagine btn-full" id="imagine-btn-result" onclick="generateFromResult()">
                         🎨 Generate New
                     </button>
@@ -302,7 +171,7 @@
                     <label class="input-label">✨ What do you want to imagine?</label>
                     <textarea class="input-field cyan" id="imagine-input" rows="4"
                         placeholder="e.g. A lonely astronaut sitting on the moon looking at Earth..."
-                        onkeydown="if(event.ctrlKey && event.key==='Enter') generateImage()"></textarea>
+                        onkeydown="if(event.ctrlKey&&event.key==='Enter') generateImage()"></textarea>
                     <small style="color:rgba(255,255,255,0.25);font-size:0.78rem;margin-top:6px;display:block;">
                         💡 Ctrl + Enter to generate
                     </small>
@@ -313,7 +182,7 @@
             </div>
         </div>
 
-        <!-- MODE 2: Read My Mind -->
+        <!-- ── MODE 2: Read My Mind ── -->
         <div id="mode-psych" style="display:none;">
             <div id="psych-questions">
                 <div class="card card-psych">
@@ -365,71 +234,53 @@
         "If your soul was a place, where would it be?"
     ];
 
-    let currentMode       = 'imagine';
-    let currentQ          = 0;
-    let answers           = [];
-    let selectedQuestions = [];
-    const MIN_Q           = 3;
+    let currentMode = 'imagine', currentQ = 0, answers = [], selectedQuestions = [];
+    const MIN_Q = 3;
 
-    // ── Init questions ──
     function initQuestions() {
         selectedQuestions = [...ALL_QUESTIONS].sort(() => Math.random() - 0.5);
         currentQ = 0; answers = [];
-        buildProgressDots();
-        showQuestion(0);
+        buildProgressDots(); showQuestion(0);
     }
 
     function buildProgressDots() {
         const wrap = document.getElementById('progress-dots');
         wrap.innerHTML = '';
         selectedQuestions.forEach((_, i) => {
-            const dot = document.createElement('div');
-            dot.className = 'progress-dot' + (i === 0 ? ' current' : '');
-            dot.id = `dot-${i}`;
-            wrap.appendChild(dot);
+            const d = document.createElement('div');
+            d.className = 'progress-dot' + (i === 0 ? ' current' : '');
+            d.id = `dot-${i}`;
+            wrap.appendChild(d);
         });
     }
 
     function updateDots(index) {
         selectedQuestions.forEach((_, i) => {
-            const dot = document.getElementById(`dot-${i}`);
-            if (!dot) return;
-            dot.className = 'progress-dot' + (i < index ? ' done' : i === index ? ' current' : '');
+            const d = document.getElementById(`dot-${i}`);
+            if (d) d.className = 'progress-dot' + (i < index ? ' done' : i === index ? ' current' : '');
         });
     }
 
     function showQuestion(index) {
-        document.getElementById('question-number').textContent = `Question ${index + 1} of ${selectedQuestions.length}`;
+        document.getElementById('question-number').textContent = `Question ${index+1} of ${selectedQuestions.length}`;
         document.getElementById('question-text').textContent   = selectedQuestions[index];
-        document.getElementById('question-input').value        = '';
+        document.getElementById('question-input').value = '';
         document.getElementById('question-input').focus();
-        updateDots(index);
-        updateButtons(index);
+        updateDots(index); updateButtons(index);
     }
 
     function updateButtons(index) {
         const btnRow = document.getElementById('btn-row');
         const isLast = index === selectedQuestions.length - 1;
         const canStop = index >= MIN_Q - 1;
-
         if (isLast) {
-            btnRow.innerHTML = `
-                <button class="btn btn-expose btn-full" onclick="nextQuestion(true)">
-                    🔮 Expose Me
-                </button>`;
+            btnRow.innerHTML = `<button class="btn btn-expose btn-full" onclick="nextQuestion(true)">🔮 Expose Me</button>`;
         } else if (canStop) {
             btnRow.innerHTML = `
-                <button class="btn btn-psych" onclick="nextQuestion(false)">
-                    Next →
-                </button>
-                <button class="btn btn-expose" onclick="nextQuestion(true)">
-                    🔮 Expose Me
-                </button>`;
+                <button class="btn btn-psych" onclick="nextQuestion(false)">Next →</button>
+                <button class="btn btn-expose" onclick="nextQuestion(true)">🔮 Expose Me</button>`;
         } else {
-            btnRow.innerHTML = `
-                <button class="btn btn-psych btn-full" onclick="nextQuestion(false)">
-                    Next Question →
-                </button>`;
+            btnRow.innerHTML = `<button class="btn btn-psych btn-full" onclick="nextQuestion(false)">Next Question →</button>`;
         }
     }
 
@@ -437,45 +288,36 @@
         const answer = document.getElementById('question-input').value.trim();
         if (!answer) { document.getElementById('question-input').focus(); return; }
         answers.push(answer);
-
         if (forceExpose || currentQ === selectedQuestions.length - 1) {
             analyzeMind();
         } else {
             currentQ++;
             const wrap = document.getElementById('question-wrap');
-            wrap.style.opacity = '0';
-            wrap.style.transform = 'translateX(30px)';
+            wrap.style.opacity = '0'; wrap.style.transform = 'translateX(30px)';
             setTimeout(() => {
                 showQuestion(currentQ);
                 wrap.style.transition = 'all 0.3s ease';
-                wrap.style.opacity    = '1';
-                wrap.style.transform  = 'translateX(0)';
+                wrap.style.opacity = '1'; wrap.style.transform = 'translateX(0)';
             }, 200);
         }
     }
 
-    // ── Mode switcher ──
     function setMode(mode) {
         currentMode = mode;
-
         document.getElementById('mode-imagine').style.display = mode === 'imagine' ? 'block' : 'none';
         document.getElementById('mode-psych').style.display   = mode === 'psych'   ? 'block' : 'none';
-
-        const btnImagine = document.getElementById('btn-imagine');
-        const btnPsych   = document.getElementById('btn-psych');
-        const heroTitle  = document.getElementById('hero-title');
-        const heroSub    = document.getElementById('hero-sub');
-
+        const heroTitle = document.getElementById('hero-title');
+        const heroSub   = document.getElementById('hero-sub');
         if (mode === 'imagine') {
-            btnImagine.className  = 'mode-btn active-imagine';
-            btnPsych.className    = 'mode-btn';
+            document.getElementById('btn-imagine').className = 'mode-btn active-imagine';
+            document.getElementById('btn-psych').className   = 'mode-btn';
             heroTitle.className   = 'hero-title cyan';
             heroTitle.textContent = '🎨 BrainPic';
             heroSub.textContent   = 'AI that turns your thoughts into art';
             document.body.className = 'mode-imagine';
         } else {
-            btnPsych.className    = 'mode-btn active-psych';
-            btnImagine.className  = 'mode-btn';
+            document.getElementById('btn-psych').className   = 'mode-btn active-psych';
+            document.getElementById('btn-imagine').className = 'mode-btn';
             heroTitle.className   = 'hero-title pink';
             heroTitle.textContent = '🧠 BrainPic';
             heroSub.textContent   = 'AI that reads your mind and exposes your soul';
@@ -484,33 +326,38 @@
         }
     }
 
-    // ── Background gradient from image colors ──
-    function setBackgroundFromImage(imageUrl) {
-        const img = new Image();
-        img.crossOrigin = 'Anonymous';
-        img.onload = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = 10; canvas.height = 10;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, 10, 10);
-            const colors = [];
-            [[2,2],[8,2],[5,5],[2,8],[8,8]].forEach(([x,y]) => {
-                const d = ctx.getImageData(x, y, 1, 1).data;
-                // Keep colors calm and dark
-                const r = Math.floor(d[0] * 0.3);
-                const g = Math.floor(d[1] * 0.3);
-                const b = Math.floor(d[2] * 0.3);
-                colors.push(`rgb(${r},${g},${b})`);
-            });
-            document.body.style.background = `linear-gradient(135deg, ${colors.join(', ')})`;
-            document.body.style.backgroundSize = '400% 400%';
-            document.body.classList.add('has-image');
-        };
-        img.onerror = () => {};
-        img.src = imageUrl;
+    function setBackgroundFromPrompt(prompt) {
+        const p = prompt.toLowerCase();
+        let colors;
+        if      (p.includes('ocean')||p.includes('sea')||p.includes('water')||p.includes('rain')||p.includes('blue'))
+            colors = ['#020d1a','#041830','#052040','#031525'];
+        else if (p.includes('fire')||p.includes('sun')||p.includes('desert')||p.includes('gold')||p.includes('orange'))
+            colors = ['#1a0800','#2a1000','#301500','#1a0a00'];
+        else if (p.includes('forest')||p.includes('nature')||p.includes('green')||p.includes('jungle')||p.includes('tree'))
+            colors = ['#021a08','#042010','#031508','#021205'];
+        else if (p.includes('space')||p.includes('galaxy')||p.includes('star')||p.includes('universe')||p.includes('cosmos'))
+            colors = ['#05020f','#0a0520','#080318','#060210'];
+        else if (p.includes('night')||p.includes('dark')||p.includes('shadow')||p.includes('black'))
+            colors = ['#050508','#080810','#060608','#040408'];
+        else if (p.includes('pink')||p.includes('rose')||p.includes('flower')||p.includes('love')||p.includes('heart'))
+            colors = ['#1a0510','#200a15','#180408','#150510'];
+        else if (p.includes('purple')||p.includes('violet')||p.includes('magic')||p.includes('mystic'))
+            colors = ['#0f0520','#150828','#100618','#0a0415'];
+        else if (p.includes('snow')||p.includes('ice')||p.includes('winter')||p.includes('white')||p.includes('cold'))
+            colors = ['#05080f','#080c18','#060a14','#040810'];
+        else if (p.includes('blood')||p.includes('war')||p.includes('red')||p.includes('danger'))
+            colors = ['#1a0202','#200505','#180303','#150202'];
+        else if (p.includes('dream')||p.includes('soul')||p.includes('mind')||p.includes('surreal'))
+            colors = ['#0a0520','#150a30','#0f0825','#080318'];
+        else
+            colors = ['#080818','#0a0a20','#080a18','#060815'];
+
+        document.body.style.background = `linear-gradient(135deg,${colors.join(',')})`;
+        document.body.style.backgroundSize = '400% 400%';
+        document.body.classList.add('has-image');
     }
 
-    // ── MODE 1 ──
+    // ── MODE 1: Imagine It ──
     async function generateImage() {
         const prompt = document.getElementById('imagine-input').value.trim();
         if (!prompt) { document.getElementById('imagine-input').focus(); return; }
@@ -531,6 +378,7 @@
         const btn = document.getElementById('imagine-btn-result');
         if (btn) { btn.innerHTML = '<span class="spinner"></span> Creating...'; btn.disabled = true; }
 
+        // ✅ Writing to IMAGINE wrap — correct!
         document.getElementById('imagine-image-wrap').innerHTML = `
             <div class="image-loading">
                 <div class="image-loading-spinner spinner-imagine"></div>
@@ -541,8 +389,7 @@
 
         try {
             const res  = await fetch('/generate', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                method:'POST', headers:{'Content-Type':'application/json'},
                 body: JSON.stringify({ prompt })
             });
             const data = await res.json();
@@ -550,17 +397,19 @@
             if (data.success) {
                 document.getElementById('imagine-enhanced-prompt').textContent = '✨ ' + data.enhanced_prompt;
                 const img = new Image();
-                img.crossOrigin = 'Anonymous';
                 img.onload = () => {
-                    document.getElementById('imagine-image-wrap').innerHTML =
-                        `<img src="${data.image_url}" class="result-image" alt="Generated" crossorigin="anonymous">`;
-                    setBackgroundFromImage(data.image_url);
+                    // ✅ Writing to IMAGINE wrap — correct!
+                    const wrap = document.getElementById('imagine-image-wrap');
+                    if (wrap) {
+                        wrap.innerHTML = `<img src="${data.image_url}" class="result-image" alt="Generated">`;
+                        setBackgroundFromPrompt(data.enhanced_prompt || '');
+                    }
                 };
                 img.onerror = () => {
                     setTimeout(() => {
-                        document.getElementById('imagine-image-wrap').innerHTML =
-                            `<img src="${data.image_url}&r=1" class="result-image" alt="Generated">`;
-                        setBackgroundFromImage(data.image_url);
+                        const wrap = document.getElementById('imagine-image-wrap');
+                        if (wrap) wrap.innerHTML = `<img src="${data.image_url}&r=1" class="result-image" alt="Generated">`;
+                        setBackgroundFromPrompt(data.enhanced_prompt || '');
                     }, 3000);
                 };
                 img.src = data.image_url;
@@ -585,12 +434,14 @@
         document.body.style.background = '';
     }
 
-    // ── MODE 2 ──
+    // ── MODE 2: Read My Mind ──
     async function analyzeMind() {
         document.getElementById('psych-questions').style.display = 'none';
         document.getElementById('psych-result').style.display    = 'block';
         document.getElementById('personality-box').style.display = 'none';
         document.getElementById('psych-prompt').textContent      = '';
+
+        // ✅ Writing to PSYCH wrap — correct!
         document.getElementById('psych-image-wrap').innerHTML = `
             <div class="image-loading">
                 <div class="image-loading-spinner spinner-psych"></div>
@@ -600,8 +451,7 @@
 
         try {
             const res  = await fetch('/analyze', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                method:'POST', headers:{'Content-Type':'application/json'},
                 body: JSON.stringify({
                     questions: selectedQuestions.slice(0, answers.length),
                     answers
@@ -615,17 +465,19 @@
                 document.getElementById('psych-prompt').textContent = '🎨 ' + data.image_prompt;
 
                 const img = new Image();
-                img.crossOrigin = 'Anonymous';
                 img.onload = () => {
-                    document.getElementById('psych-image-wrap').innerHTML =
-                        `<img src="${data.image_url}" class="result-image" alt="Your Mind" crossorigin="anonymous">`;
-                    setBackgroundFromImage(data.image_url);
+                    // ✅ Writing to PSYCH wrap — correct!
+                    const wrap = document.getElementById('psych-image-wrap');
+                    if (wrap) {
+                        wrap.innerHTML = `<img src="${data.image_url}" class="result-image" alt="Your Mind">`;
+                        setBackgroundFromPrompt(data.image_prompt || '');
+                    }
                 };
                 img.onerror = () => {
                     setTimeout(() => {
-                        document.getElementById('psych-image-wrap').innerHTML =
-                            `<img src="${data.image_url}&r=1" class="result-image" alt="Your Mind">`;
-                        setBackgroundFromImage(data.image_url);
+                        const wrap = document.getElementById('psych-image-wrap');
+                        if (wrap) wrap.innerHTML = `<img src="${data.image_url}&r=1" class="result-image" alt="Your Mind">`;
+                        setBackgroundFromPrompt(data.image_prompt || '');
                     }, 3000);
                 };
                 img.src = data.image_url;
