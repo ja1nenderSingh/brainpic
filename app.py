@@ -41,7 +41,7 @@ def generate():
         # Pollinations is FREE — we just build a URL and it returns an image!
         # No API key needed — just call the URL directly
         encoded   = urllib.parse.quote(enhanced_prompt)
-        image_url = f"https://image.pollinations.ai/prompt/{encoded}?width=768&height=768&nologo=true&model=flux&seed={abs(hash(prompt)) % 99999}"
+        image_url = f"https://image.pollinations.ai/prompt/{encoded}?width=768&height=768&nologo=true&model=flux&enhance=true&seed={abs(hash(prompt)) % 99999}"
 
         return jsonify({
             'success':         True,
@@ -107,7 +107,7 @@ IMAGE_PROMPT: [your surreal artistic image prompt]"""
 
         # Generate mind image using Pollinations
         encoded   = urllib.parse.quote(image_prompt)
-        image_url = f"https://image.pollinations.ai/prompt/{encoded}?width=768&height=768&nologo=true&model=flux"
+        image_url = f"https://image.pollinations.ai/prompt/{encoded}?width=768&height=768&nologo=true&model=flux&enhance=true"
 
         return jsonify({
             'success':      True,

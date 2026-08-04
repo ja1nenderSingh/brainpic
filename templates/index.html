@@ -326,36 +326,64 @@
         }
     }
 
-    function setBackgroundFromPrompt(prompt) {
-        const p = prompt.toLowerCase();
-        let colors;
-        if      (p.includes('ocean')||p.includes('sea')||p.includes('water')||p.includes('rain')||p.includes('blue'))
-            colors = ['#020d1a','#041830','#052040','#031525'];
-        else if (p.includes('fire')||p.includes('sun')||p.includes('desert')||p.includes('gold')||p.includes('orange'))
-            colors = ['#1a0800','#2a1000','#301500','#1a0a00'];
-        else if (p.includes('forest')||p.includes('nature')||p.includes('green')||p.includes('jungle')||p.includes('tree'))
-            colors = ['#021a08','#042010','#031508','#021205'];
-        else if (p.includes('space')||p.includes('galaxy')||p.includes('star')||p.includes('universe')||p.includes('cosmos'))
-            colors = ['#05020f','#0a0520','#080318','#060210'];
-        else if (p.includes('night')||p.includes('dark')||p.includes('shadow')||p.includes('black'))
-            colors = ['#050508','#080810','#060608','#040408'];
-        else if (p.includes('pink')||p.includes('rose')||p.includes('flower')||p.includes('love')||p.includes('heart'))
-            colors = ['#1a0510','#200a15','#180408','#150510'];
-        else if (p.includes('purple')||p.includes('violet')||p.includes('magic')||p.includes('mystic'))
-            colors = ['#0f0520','#150828','#100618','#0a0415'];
-        else if (p.includes('snow')||p.includes('ice')||p.includes('winter')||p.includes('white')||p.includes('cold'))
-            colors = ['#05080f','#080c18','#060a14','#040810'];
-        else if (p.includes('blood')||p.includes('war')||p.includes('red')||p.includes('danger'))
-            colors = ['#1a0202','#200505','#180303','#150202'];
-        else if (p.includes('dream')||p.includes('soul')||p.includes('mind')||p.includes('surreal'))
-            colors = ['#0a0520','#150a30','#0f0825','#080318'];
-        else
-            colors = ['#080818','#0a0a20','#080a18','#060815'];
-
-        document.body.style.background = `linear-gradient(135deg,${colors.join(',')})`;
-        document.body.style.backgroundSize = '400% 400%';
-        document.body.classList.add('has-image');
+    // Simple hash — turns any text into a number
+function hashText(text) {
+    let hash = 0;
+    for (let i = 0; i < text.length; i++) {
+        hash = ((hash << 5) - hash) + text.charCodeAt(i);
+        hash |= 0;
     }
+    return Math.abs(hash);
+}
+
+// Convert HSL to hex — lets us control hue, saturation, lightness
+function hslToHex(h, s, l) {
+    l /= 100; s /= 100;
+    const a = s * Math.min(l, 1 - l);
+    const f = n => {
+        const k = (n + h / 30) % 12;
+        const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+        return Math.round(255 * color).toString(16).padStart(2, '0');
+    };
+    return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+function setBackgroundFromPrompt(prompt) {
+    const p = prompt.toLowerCase();
+    let baseHue = null;
+
+    // First try keyword matching for accuracy
+    if      (p.includes('ocean')||p.includes('sea')||p.includes('water')||p.includes('rain'))  baseHue = 210;
+    else if (p.includes('fire')||p.includes('sun')||p.includes('desert')||p.includes('orange')) baseHue = 25;
+    else if (p.includes('forest')||p.includes('nature')||p.includes('green')||p.includes('jungle')) baseHue = 140;
+    else if (p.includes('space')||p.includes('galaxy')||p.includes('star')||p.includes('cosmos')) baseHue = 260;
+    else if (p.includes('pink')||p.includes('rose')||p.includes('love')||p.includes('heart'))   baseHue = 330;
+    else if (p.includes('purple')||p.includes('violet')||p.includes('magic'))                    baseHue = 280;
+    else if (p.includes('snow')||p.includes('ice')||p.includes('winter')||p.includes('cold'))   baseHue = 200;
+    else if (p.includes('blood')||p.includes('war')||p.includes('red')||p.includes('danger'))   baseHue = 0;
+    else if (p.includes('gold')||p.includes('yellow')||p.includes('sunny'))                      baseHue = 45;
+    else if (p.includes('night')||p.includes('dark')||p.includes('shadow'))                      baseHue = 240;
+    else if (p.includes('dream')||p.includes('soul')||p.includes('mind')||p.includes('surreal')) baseHue = 270;
+
+    // If no keyword match → generate unique hue from prompt hash
+    // This means EVERY prompt gets its own color, not black!
+    if (baseHue === null) {
+        baseHue = hashText(prompt) % 360;
+    }
+
+    // Generate 4 related dark colors from the base hue
+    // Low lightness (8-12%) keeps it calm and dark — never black!
+    const colors = [
+        hslToHex(baseHue,        60, 18),
+        hslToHex((baseHue + 20) % 360, 55, 22),
+        hslToHex((baseHue + 40) % 360, 50, 16),
+        hslToHex((baseHue - 20 + 360) % 360, 58, 20),
+    ];
+
+    document.body.style.background = `linear-gradient(135deg,${colors.join(',')})`;
+    document.body.style.backgroundSize = '400% 400%';
+    document.body.classList.add('has-image');
+}
 
     // ── MODE 1: Imagine It ──
     async function generateImage() {
@@ -396,23 +424,14 @@
 
             if (data.success) {
                 document.getElementById('imagine-enhanced-prompt').textContent = '✨ ' + data.enhanced_prompt;
-                const img = new Image();
-                img.onload = () => {
-                    // ✅ Writing to IMAGINE wrap — correct!
-                    const wrap = document.getElementById('imagine-image-wrap');
-                    if (wrap) {
-                        wrap.innerHTML = `<img src="${data.image_url}" class="result-image" alt="Generated">`;
-                        setBackgroundFromPrompt(data.enhanced_prompt || '');
-                    }
-                };
-                img.onerror = () => {
-                    setTimeout(() => {
-                        const wrap = document.getElementById('imagine-image-wrap');
-                        if (wrap) wrap.innerHTML = `<img src="${data.image_url}&r=1" class="result-image" alt="Generated">`;
-                        setBackgroundFromPrompt(data.enhanced_prompt || '');
-                    }, 3000);
-                };
-                img.src = data.image_url;
+                // Show image directly — don't wait for onload
+                const wrap = document.getElementById('imagine-image-wrap');
+                if (wrap) {
+                    wrap.innerHTML = `<img src="${data.image_url}" class="result-image" alt="Generated" 
+                        onerror="this.parentElement.innerHTML='<div class=\\'image-loading\\'><p>⏳ Image taking longer... <a href=\\'${data.image_url}\\' target=\\'_blank\\' style=\\'color:#5bc8e8\\'>Open directly</a></p></div>'"
+                    >`;
+                    setBackgroundFromPrompt(data.enhanced_prompt || '');
+                }
             } else {
                 document.getElementById('imagine-image-wrap').innerHTML =
                     `<div class="image-loading"><p>❌ ${data.error}</p></div>`;
@@ -464,23 +483,13 @@
                 document.getElementById('personality-box').style.display = 'block';
                 document.getElementById('psych-prompt').textContent = '🎨 ' + data.image_prompt;
 
-                const img = new Image();
-                img.onload = () => {
-                    // ✅ Writing to PSYCH wrap — correct!
-                    const wrap = document.getElementById('psych-image-wrap');
-                    if (wrap) {
-                        wrap.innerHTML = `<img src="${data.image_url}" class="result-image" alt="Your Mind">`;
-                        setBackgroundFromPrompt(data.image_prompt || '');
-                    }
-                };
-                img.onerror = () => {
-                    setTimeout(() => {
-                        const wrap = document.getElementById('psych-image-wrap');
-                        if (wrap) wrap.innerHTML = `<img src="${data.image_url}&r=1" class="result-image" alt="Your Mind">`;
-                        setBackgroundFromPrompt(data.image_prompt || '');
-                    }, 3000);
-                };
-                img.src = data.image_url;
+                const wrap = document.getElementById('psych-image-wrap');
+                if (wrap) {
+                    wrap.innerHTML = `<img src="${data.image_url}" class="result-image" alt="Your Mind"
+                        onerror="this.parentElement.innerHTML='<div class=\\'image-loading\\'><p>⏳ Image taking longer... <a href=\\'${data.image_url}\\' target=\\'_blank\\' style=\\'color:#e87aaa\\'>Open directly</a></p></div>'"
+                    >`;
+                    setBackgroundFromPrompt(data.image_prompt || '');
+                }
             } else {
                 document.getElementById('psych-image-wrap').innerHTML =
                     `<div class="image-loading"><p>❌ ${data.error}</p></div>`;
