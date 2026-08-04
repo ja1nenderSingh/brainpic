@@ -69,22 +69,32 @@ def analyze():
         # 1. Write a deep personality reading
         # 2. Create an artistic image prompt of their inner mind
         response = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=[{
-                "role": "user",
-                "content": f"""You are a deep psychological analyst and artist.
-Based on these answers, do exactly 2 things:
+    model="llama-3.3-70b-versatile",
+    messages=[{
+        "role": "user",
+        "content": f"""You are the world's most insightful psychological profiler. You don't just read answers — you read what's BEHIND the answers. You find what people are hiding even from themselves.
+
+Here are someone's answers:
 
 {qa_text}
 
-1. Write a powerful personal personality reading (3-4 sentences). Make it feel like you truly know them. Start with "You are..."
-2. Create a vivid poetic artistic image prompt that represents their inner mind and soul visually.
+Your job:
+1. Write a DEEP psychological personality reading (4-5 sentences). 
+- DO NOT just repeat or paraphrase their answers
+- Read BETWEEN the lines — what do these answers REVEAL about their fears, desires, wounds, and strengths that they didn't directly say?
+- Be specific, surprising, and profound — like you know their soul
+- Mention things they didn't say but that are clearly true based on patterns
+- Start with "You are..." but go DEEP — not surface level
+- Example of BAD output: "You think about money at 3AM" (just repeating)
+- Example of GOOD output: "You carry the weight of financial anxiety not because you're greedy, but because somewhere in your past, instability taught you that security equals survival"
 
-Respond in EXACTLY this format, nothing else:
-PERSONALITY: [your personality reading]
-IMAGE_PROMPT: [your artistic image prompt]"""
-            }]
-        )
+2. Create a vivid, surreal, artistic image prompt that represents their SUBCONSCIOUS mind — not their words, but what lies beneath them.
+
+Respond in EXACTLY this format:
+PERSONALITY: [your deep psychological reading]
+IMAGE_PROMPT: [your surreal artistic image prompt]"""
+    }]
+)
         text = response.choices[0].message.content.strip()
 
         # Parse response into personality and image prompt
