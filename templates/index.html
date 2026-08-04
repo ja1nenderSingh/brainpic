@@ -11,90 +11,46 @@
         body.mode-imagine { background:linear-gradient(135deg,#050d1a,#0a1828,#051520,#080d1f); }
         body.mode-psych   { background:linear-gradient(135deg,#1a0510,#200a18,#150515,#1a0a20); }
         body.has-image    { background-size:400% 400%; animation:gradientShift 8s ease infinite; }
-        @keyframes gradientShift {
-            0%   { background-position:0% 50%; }
-            50%  { background-position:100% 50%; }
-            100% { background-position:0% 50%; }
-        }
-        .overlay {
-            min-height:100vh; background:rgba(0,0,0,0.45);
-            display:flex; flex-direction:column; align-items:center; padding:2rem 1rem;
-        }
+        @keyframes gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+        .overlay { min-height:100vh; background:rgba(0,0,0,0.45); display:flex; flex-direction:column; align-items:center; padding:2rem 1rem; }
         .hero { text-align:center; margin-bottom:2rem; }
         .hero-title { font-size:clamp(2.2rem,6vw,4rem); font-weight:800; margin-bottom:0.4rem; transition:color 1s ease; }
         .hero-title.cyan { color:#5bc8e8; }
         .hero-title.pink { color:#e87aaa; }
         .hero-sub { color:rgba(255,255,255,0.5); font-size:1rem; }
         .mode-selector { display:flex; gap:0.8rem; justify-content:center; margin-bottom:2rem; flex-wrap:wrap; }
-        .mode-btn {
-            padding:0.7rem 1.8rem; border:2px solid rgba(255,255,255,0.15);
-            background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.6);
-            border-radius:50px; font-size:0.95rem; font-weight:600;
-            cursor:pointer; transition:all 0.3s; backdrop-filter:blur(10px);
-        }
+        .mode-btn { padding:0.7rem 1.8rem; border:2px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.6); border-radius:50px; font-size:0.95rem; font-weight:600; cursor:pointer; transition:all 0.3s; backdrop-filter:blur(10px); }
         .mode-btn:hover { transform:translateY(-2px); }
         .mode-btn.active-imagine { background:rgba(91,200,232,0.12); border-color:#5bc8e8; color:#5bc8e8; box-shadow:0 4px 20px rgba(91,200,232,0.2); }
         .mode-btn.active-psych   { background:rgba(232,122,170,0.12); border-color:#e87aaa; color:#e87aaa; box-shadow:0 4px 20px rgba(232,122,170,0.2); }
         .main { width:100%; max-width:680px; }
-        .card {
-            background:rgba(255,255,255,0.06); backdrop-filter:blur(20px);
-            border:1px solid rgba(255,255,255,0.1); border-radius:24px;
-            padding:1.8rem; margin-bottom:1rem; animation:fadeInUp 0.5s ease-out;
-        }
+        .card { background:rgba(255,255,255,0.06); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.1); border-radius:24px; padding:1.8rem; margin-bottom:1rem; animation:fadeInUp 0.5s ease-out; }
         .card-imagine { border-color:rgba(91,200,232,0.15); }
         .card-psych   { border-color:rgba(232,122,170,0.15); }
-        .result-image-wrap {
-            width:100%; border-radius:20px; overflow:hidden; margin-bottom:1rem;
-            min-height:280px; background:rgba(255,255,255,0.04);
-            display:flex; align-items:center; justify-content:center;
-            border:1px solid rgba(255,255,255,0.08);
-        }
+        .result-image-wrap { width:100%; border-radius:20px; overflow:hidden; margin-bottom:1rem; min-height:280px; background:rgba(255,255,255,0.04); display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.08); }
         .imagine-wrap { border-color:rgba(91,200,232,0.15); }
         .psych-wrap   { border-color:rgba(232,122,170,0.15); }
         .result-image { width:100%; border-radius:20px; display:block; animation:fadeIn 0.8s ease-out; }
         .image-loading { text-align:center; color:rgba(255,255,255,0.4); padding:3rem 1rem; }
-        .image-loading-spinner {
-            width:44px; height:44px; border:3px solid rgba(255,255,255,0.08);
-            border-radius:50%; animation:spin 1s linear infinite; margin:0 auto 1rem;
-        }
+        .image-loading-spinner { width:44px; height:44px; border:3px solid rgba(255,255,255,0.08); border-radius:50%; animation:spin 1s linear infinite; margin:0 auto 1rem; }
         .spinner-imagine { border-top-color:#5bc8e8; }
         .spinner-psych   { border-top-color:#e87aaa; }
-        .try-again-btn {
-            width:100%; padding:0.75rem; background:rgba(255,255,255,0.05);
-            border:1px solid rgba(255,255,255,0.1); border-radius:12px;
-            color:rgba(255,255,255,0.5); font-size:0.9rem; font-weight:600;
-            cursor:pointer; transition:all 0.2s; margin-bottom:1rem;
-        }
+        .try-again-btn { width:100%; padding:0.75rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:rgba(255,255,255,0.5); font-size:0.9rem; font-weight:600; cursor:pointer; transition:all 0.2s; margin-bottom:1rem; }
         .try-again-btn:hover { background:rgba(255,255,255,0.1); color:white; }
         .input-label { display:block; font-size:0.88rem; font-weight:600; color:rgba(255,255,255,0.6); margin-bottom:0.5rem; }
-        .input-field {
-            width:100%; padding:0.9rem 1.2rem; background:rgba(255,255,255,0.05);
-            border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:white;
-            font-size:0.95rem; outline:none; transition:border 0.2s,box-shadow 0.2s; resize:none;
-        }
+        .input-field { width:100%; padding:0.9rem 1.2rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:white; font-size:0.95rem; outline:none; transition:border 0.2s,box-shadow 0.2s; resize:none; }
         .input-field::placeholder { color:rgba(255,255,255,0.25); }
         .input-field.cyan:focus { border-color:rgba(91,200,232,0.5); box-shadow:0 0 0 3px rgba(91,200,232,0.08); }
         .input-field.pink:focus { border-color:rgba(232,122,170,0.5); box-shadow:0 0 0 3px rgba(232,122,170,0.08); }
-        .btn {
-            padding:1rem; border:none; border-radius:14px; font-size:1rem; font-weight:700;
-            cursor:pointer; transition:all 0.2s; margin-top:0.8rem;
-            touch-action:manipulation; -webkit-tap-highlight-color:transparent;
-        }
+        .btn { padding:1rem; border:none; border-radius:14px; font-size:1rem; font-weight:700; cursor:pointer; transition:all 0.2s; margin-top:0.8rem; touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
         .btn-full { width:100%; }
         .btn-imagine { background:linear-gradient(135deg,#2a8aaa,#5bc8e8); color:#000; box-shadow:0 4px 20px rgba(91,200,232,0.25); }
         .btn-imagine:hover { transform:translateY(-2px); box-shadow:0 6px 30px rgba(91,200,232,0.4); }
         .btn-psych { background:linear-gradient(135deg,#b84a7a,#e87aaa); color:white; box-shadow:0 4px 20px rgba(232,122,170,0.25); }
         .btn-psych:hover { transform:translateY(-2px); box-shadow:0 6px 30px rgba(232,122,170,0.4); }
-        .btn-expose {
-            background:linear-gradient(135deg,#0a8a6a,#0abf8a); color:white;
-            box-shadow:0 4px 20px rgba(10,191,138,0.3);
-            animation:exposePulse 2s ease-in-out infinite;
-        }
+        .btn-expose { background:linear-gradient(135deg,#0a8a6a,#0abf8a); color:white; box-shadow:0 4px 20px rgba(10,191,138,0.3); animation:exposePulse 2s ease-in-out infinite; }
         .btn-expose:hover { transform:translateY(-2px); box-shadow:0 6px 30px rgba(10,191,138,0.5); }
-        @keyframes exposePulse {
-            0%,100% { box-shadow:0 4px 20px rgba(10,191,138,0.3); }
-            50%      { box-shadow:0 4px 35px rgba(10,191,138,0.5); }
-        }
+        @keyframes exposePulse { 0%,100%{box-shadow:0 4px 20px rgba(10,191,138,0.3)} 50%{box-shadow:0 4px 35px rgba(10,191,138,0.5)} }
         .btn:disabled { opacity:0.6; cursor:not-allowed; transform:none; animation:none; }
         .btn-row { display:flex; gap:0.8rem; margin-top:0.8rem; min-height:60px; align-items:stretch; }
         .btn-row .btn { margin-top:0; flex:1; }
@@ -106,44 +62,29 @@
         .progress-dot { height:4px; flex:1; border-radius:2px; background:rgba(255,255,255,0.12); transition:background 0.3s; }
         .progress-dot.done    { background:#e87aaa; }
         .progress-dot.current { background:rgba(232,122,170,0.4); }
-        .personality-box {
-            background:rgba(232,122,170,0.06); border:1px solid rgba(232,122,170,0.2);
-            border-radius:16px; padding:1.2rem; margin-bottom:1rem; animation:fadeInUp 0.5s ease-out;
-        }
+        .personality-box { background:rgba(232,122,170,0.06); border:1px solid rgba(232,122,170,0.2); border-radius:16px; padding:1.2rem; margin-bottom:1rem; animation:fadeInUp 0.5s ease-out; }
         .personality-title { font-size:0.78rem; font-weight:700; color:#e87aaa; margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:1px; }
         .personality-text { font-size:0.95rem; color:rgba(255,255,255,0.8); line-height:1.7; }
-        .spinner {
-            display:inline-block; width:18px; height:18px;
-            border:2px solid rgba(255,255,255,0.3); border-top-color:white;
-            border-radius:50%; animation:spin 0.7s linear infinite;
-            vertical-align:middle; margin-right:8px;
-        }
-        @keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-        @keyframes fadeIn   { from { opacity:0; } to { opacity:1; } }
-        @keyframes spin     { to { transform:rotate(360deg); } }
-        @media (max-width:768px) {
-            .overlay { padding:1.5rem 0.8rem; }
-            .card { padding:1.3rem; }
-            .btn-row { flex-direction:column; }
-        }
+        .spinner { display:inline-block; width:18px; height:18px; border:2px solid rgba(255,255,255,0.3); border-top-color:white; border-radius:50%; animation:spin 0.7s linear infinite; vertical-align:middle; margin-right:8px; }
+        .retry-link { color:#5bc8e8; text-decoration:none; font-size:0.88rem; display:block; margin-top:0.5rem; }
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes fadeIn   { from{opacity:0} to{opacity:1} }
+        @keyframes spin     { to{transform:rotate(360deg)} }
+        @media (max-width:768px) { .overlay{padding:1.5rem 0.8rem} .card{padding:1.3rem} .btn-row{flex-direction:column} }
     </style>
 </head>
 <body class="mode-imagine">
 <div class="overlay">
-
     <div class="hero">
         <div class="hero-title cyan" id="hero-title">🎨 BrainPic</div>
         <div class="hero-sub" id="hero-sub">AI that turns your thoughts into art</div>
     </div>
-
     <div class="mode-selector">
         <button class="mode-btn active-imagine" id="btn-imagine" onclick="setMode('imagine')">🎨 Imagine It</button>
         <button class="mode-btn" id="btn-psych" onclick="setMode('psych')">🧠 Read My Mind</button>
     </div>
-
     <div class="main">
-
-        <!-- ── MODE 1: Imagine It ── -->
+        <!-- MODE 1 -->
         <div id="mode-imagine">
             <div id="imagine-result" style="display:none;">
                 <div class="card card-imagine">
@@ -151,38 +92,26 @@
                         <div class="image-loading">
                             <div class="image-loading-spinner spinner-imagine"></div>
                             <p>Painting your imagination...</p>
-                            <small>Takes 10–20 seconds</small>
+                            <small>Takes 15–30 seconds</small>
                         </div>
                     </div>
                     <button class="try-again-btn" onclick="resetImagine()">🔄 Try Another Idea</button>
                     <label class="input-label">✨ Your idea</label>
-                    <textarea class="input-field cyan" id="imagine-input-result" rows="2"
-                        placeholder="Type a new idea..."
-                        onkeydown="if(event.ctrlKey&&event.key==='Enter') generateFromResult()"></textarea>
-                    <button class="btn btn-imagine btn-full" id="imagine-btn-result" onclick="generateFromResult()">
-                        🎨 Generate New
-                    </button>
+                    <textarea class="input-field cyan" id="imagine-input-result" rows="2" placeholder="Type a new idea..." onkeydown="if(event.ctrlKey&&event.key==='Enter') generateFromResult()"></textarea>
+                    <button class="btn btn-imagine btn-full" id="imagine-btn-result" onclick="generateFromResult()">🎨 Generate New</button>
                     <div class="enhanced-prompt" id="imagine-enhanced-prompt"></div>
                 </div>
             </div>
-
             <div id="imagine-form">
                 <div class="card card-imagine">
                     <label class="input-label">✨ What do you want to imagine?</label>
-                    <textarea class="input-field cyan" id="imagine-input" rows="4"
-                        placeholder="e.g. A lonely astronaut sitting on the moon looking at Earth..."
-                        onkeydown="if(event.ctrlKey&&event.key==='Enter') generateImage()"></textarea>
-                    <small style="color:rgba(255,255,255,0.25);font-size:0.78rem;margin-top:6px;display:block;">
-                        💡 Ctrl + Enter to generate
-                    </small>
-                    <button class="btn btn-imagine btn-full" id="imagine-btn" onclick="generateImage()">
-                        🎨 Generate Image
-                    </button>
+                    <textarea class="input-field cyan" id="imagine-input" rows="4" placeholder="e.g. A lonely astronaut sitting on the moon looking at Earth..." onkeydown="if(event.ctrlKey&&event.key==='Enter') generateImage()"></textarea>
+                    <small style="color:rgba(255,255,255,0.25);font-size:0.78rem;margin-top:6px;display:block;">💡 Ctrl + Enter to generate</small>
+                    <button class="btn btn-imagine btn-full" id="imagine-btn" onclick="generateImage()">🎨 Generate Image</button>
                 </div>
             </div>
         </div>
-
-        <!-- ── MODE 2: Read My Mind ── -->
+        <!-- MODE 2 -->
         <div id="mode-psych" style="display:none;">
             <div id="psych-questions">
                 <div class="card card-psych">
@@ -190,14 +119,11 @@
                     <div class="question-wrap" id="question-wrap">
                         <div class="question-number" id="question-number">Question 1</div>
                         <div class="question-text" id="question-text"></div>
-                        <input type="text" class="input-field pink" id="question-input"
-                            placeholder="Your honest answer..."
-                            onkeydown="if(event.key==='Enter') nextQuestion(false)">
+                        <input type="text" class="input-field pink" id="question-input" placeholder="Your honest answer..." onkeydown="if(event.key==='Enter') nextQuestion(false)">
                     </div>
                     <div class="btn-row" id="btn-row" style="margin-top:1rem;"></div>
                 </div>
             </div>
-
             <div id="psych-result" style="display:none;">
                 <div class="card card-psych">
                     <div class="result-image-wrap psych-wrap" id="psych-image-wrap">
@@ -216,7 +142,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -234,234 +159,245 @@
         "If your soul was a place, where would it be?"
     ];
 
-    let currentMode = 'imagine', currentQ = 0, answers = [], selectedQuestions = [];
-    const MIN_Q = 3;
+    let currentMode='imagine', currentQ=0, answers=[], selectedQuestions=[];
+    const MIN_Q=3;
 
     function initQuestions() {
-        selectedQuestions = [...ALL_QUESTIONS].sort(() => Math.random() - 0.5);
-        currentQ = 0; answers = [];
+        selectedQuestions=[...ALL_QUESTIONS].sort(()=>Math.random()-0.5);
+        currentQ=0; answers=[];
         buildProgressDots(); showQuestion(0);
     }
 
     function buildProgressDots() {
-        const wrap = document.getElementById('progress-dots');
-        wrap.innerHTML = '';
-        selectedQuestions.forEach((_, i) => {
-            const d = document.createElement('div');
-            d.className = 'progress-dot' + (i === 0 ? ' current' : '');
-            d.id = `dot-${i}`;
+        const wrap=document.getElementById('progress-dots');
+        wrap.innerHTML='';
+        selectedQuestions.forEach((_,i)=>{
+            const d=document.createElement('div');
+            d.className='progress-dot'+(i===0?' current':'');
+            d.id=`dot-${i}`;
             wrap.appendChild(d);
         });
     }
 
     function updateDots(index) {
-        selectedQuestions.forEach((_, i) => {
-            const d = document.getElementById(`dot-${i}`);
-            if (d) d.className = 'progress-dot' + (i < index ? ' done' : i === index ? ' current' : '');
+        selectedQuestions.forEach((_,i)=>{
+            const d=document.getElementById(`dot-${i}`);
+            if(d) d.className='progress-dot'+(i<index?' done':i===index?' current':'');
         });
     }
 
     function showQuestion(index) {
-        document.getElementById('question-number').textContent = `Question ${index+1} of ${selectedQuestions.length}`;
-        document.getElementById('question-text').textContent   = selectedQuestions[index];
-        document.getElementById('question-input').value = '';
+        document.getElementById('question-number').textContent=`Question ${index+1} of ${selectedQuestions.length}`;
+        document.getElementById('question-text').textContent=selectedQuestions[index];
+        document.getElementById('question-input').value='';
         document.getElementById('question-input').focus();
         updateDots(index); updateButtons(index);
     }
 
     function updateButtons(index) {
-        const btnRow = document.getElementById('btn-row');
-        const isLast = index === selectedQuestions.length - 1;
-        const canStop = index >= MIN_Q - 1;
-        if (isLast) {
-            btnRow.innerHTML = `<button class="btn btn-expose btn-full" onclick="nextQuestion(true)">🔮 Expose Me</button>`;
-        } else if (canStop) {
-            btnRow.innerHTML = `
+        const btnRow=document.getElementById('btn-row');
+        const isLast=index===selectedQuestions.length-1;
+        const canStop=index>=MIN_Q-1;
+        if(isLast) {
+            btnRow.innerHTML=`<button class="btn btn-expose btn-full" onclick="nextQuestion(true)">🔮 Expose Me</button>`;
+        } else if(canStop) {
+            btnRow.innerHTML=`
                 <button class="btn btn-psych" onclick="nextQuestion(false)">Next →</button>
                 <button class="btn btn-expose" onclick="nextQuestion(true)">🔮 Expose Me</button>`;
         } else {
-            btnRow.innerHTML = `<button class="btn btn-psych btn-full" onclick="nextQuestion(false)">Next Question →</button>`;
+            btnRow.innerHTML=`<button class="btn btn-psych btn-full" onclick="nextQuestion(false)">Next Question →</button>`;
         }
     }
 
     function nextQuestion(forceExpose) {
-        const answer = document.getElementById('question-input').value.trim();
-        if (!answer) { document.getElementById('question-input').focus(); return; }
+        const answer=document.getElementById('question-input').value.trim();
+        if(!answer){document.getElementById('question-input').focus();return;}
         answers.push(answer);
-        if (forceExpose || currentQ === selectedQuestions.length - 1) {
+        if(forceExpose||currentQ===selectedQuestions.length-1){
             analyzeMind();
         } else {
             currentQ++;
-            const wrap = document.getElementById('question-wrap');
-            wrap.style.opacity = '0'; wrap.style.transform = 'translateX(30px)';
-            setTimeout(() => {
+            const wrap=document.getElementById('question-wrap');
+            wrap.style.opacity='0'; wrap.style.transform='translateX(30px)';
+            setTimeout(()=>{
                 showQuestion(currentQ);
-                wrap.style.transition = 'all 0.3s ease';
-                wrap.style.opacity = '1'; wrap.style.transform = 'translateX(0)';
-            }, 200);
+                wrap.style.transition='all 0.3s ease';
+                wrap.style.opacity='1'; wrap.style.transform='translateX(0)';
+            },200);
         }
     }
 
     function setMode(mode) {
-        currentMode = mode;
-        document.getElementById('mode-imagine').style.display = mode === 'imagine' ? 'block' : 'none';
-        document.getElementById('mode-psych').style.display   = mode === 'psych'   ? 'block' : 'none';
-        const heroTitle = document.getElementById('hero-title');
-        const heroSub   = document.getElementById('hero-sub');
-        if (mode === 'imagine') {
-            document.getElementById('btn-imagine').className = 'mode-btn active-imagine';
-            document.getElementById('btn-psych').className   = 'mode-btn';
-            heroTitle.className   = 'hero-title cyan';
-            heroTitle.textContent = '🎨 BrainPic';
-            heroSub.textContent   = 'AI that turns your thoughts into art';
-            document.body.className = 'mode-imagine';
+        currentMode=mode;
+        document.getElementById('mode-imagine').style.display=mode==='imagine'?'block':'none';
+        document.getElementById('mode-psych').style.display=mode==='psych'?'block':'none';
+        const heroTitle=document.getElementById('hero-title');
+        const heroSub=document.getElementById('hero-sub');
+        if(mode==='imagine'){
+            document.getElementById('btn-imagine').className='mode-btn active-imagine';
+            document.getElementById('btn-psych').className='mode-btn';
+            heroTitle.className='hero-title cyan';
+            heroTitle.textContent='🎨 BrainPic';
+            heroSub.textContent='AI that turns your thoughts into art';
+            document.body.className='mode-imagine';
         } else {
-            document.getElementById('btn-psych').className   = 'mode-btn active-psych';
-            document.getElementById('btn-imagine').className = 'mode-btn';
-            heroTitle.className   = 'hero-title pink';
-            heroTitle.textContent = '🧠 BrainPic';
-            heroSub.textContent   = 'AI that reads your mind and exposes your soul';
-            document.body.className = 'mode-psych';
-            if (answers.length === 0) initQuestions();
+            document.getElementById('btn-psych').className='mode-btn active-psych';
+            document.getElementById('btn-imagine').className='mode-btn';
+            heroTitle.className='hero-title pink';
+            heroTitle.textContent='🧠 BrainPic';
+            heroSub.textContent='AI that reads your mind and exposes your soul';
+            document.body.className='mode-psych';
+            if(answers.length===0) initQuestions();
         }
     }
 
-    // Simple hash — turns any text into a number
-function hashText(text) {
-    let hash = 0;
-    for (let i = 0; i < text.length; i++) {
-        hash = ((hash << 5) - hash) + text.charCodeAt(i);
-        hash |= 0;
-    }
-    return Math.abs(hash);
-}
-
-// Convert HSL to hex — lets us control hue, saturation, lightness
-function hslToHex(h, s, l) {
-    l /= 100; s /= 100;
-    const a = s * Math.min(l, 1 - l);
-    const f = n => {
-        const k = (n + h / 30) % 12;
-        const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-        return Math.round(255 * color).toString(16).padStart(2, '0');
-    };
-    return `#${f(0)}${f(8)}${f(4)}`;
-}
-
-function setBackgroundFromPrompt(prompt) {
-    const p = prompt.toLowerCase();
-    let baseHue = null;
-
-    // First try keyword matching for accuracy
-    if      (p.includes('ocean')||p.includes('sea')||p.includes('water')||p.includes('rain'))  baseHue = 210;
-    else if (p.includes('fire')||p.includes('sun')||p.includes('desert')||p.includes('orange')) baseHue = 25;
-    else if (p.includes('forest')||p.includes('nature')||p.includes('green')||p.includes('jungle')) baseHue = 140;
-    else if (p.includes('space')||p.includes('galaxy')||p.includes('star')||p.includes('cosmos')) baseHue = 260;
-    else if (p.includes('pink')||p.includes('rose')||p.includes('love')||p.includes('heart'))   baseHue = 330;
-    else if (p.includes('purple')||p.includes('violet')||p.includes('magic'))                    baseHue = 280;
-    else if (p.includes('snow')||p.includes('ice')||p.includes('winter')||p.includes('cold'))   baseHue = 200;
-    else if (p.includes('blood')||p.includes('war')||p.includes('red')||p.includes('danger'))   baseHue = 0;
-    else if (p.includes('gold')||p.includes('yellow')||p.includes('sunny'))                      baseHue = 45;
-    else if (p.includes('night')||p.includes('dark')||p.includes('shadow'))                      baseHue = 240;
-    else if (p.includes('dream')||p.includes('soul')||p.includes('mind')||p.includes('surreal')) baseHue = 270;
-
-    // If no keyword match → generate unique hue from prompt hash
-    // This means EVERY prompt gets its own color, not black!
-    if (baseHue === null) {
-        baseHue = hashText(prompt) % 360;
+    // ── Hash function — unique number from any text ──
+    function hashText(text) {
+        let hash=0;
+        for(let i=0;i<text.length;i++){hash=((hash<<5)-hash)+text.charCodeAt(i);hash|=0;}
+        return Math.abs(hash);
     }
 
-    // Generate 4 related dark colors from the base hue
-    // Low lightness (8-12%) keeps it calm and dark — never black!
-    const colors = [
-        hslToHex(baseHue,        60, 18),
-        hslToHex((baseHue + 20) % 360, 55, 22),
-        hslToHex((baseHue + 40) % 360, 50, 16),
-        hslToHex((baseHue - 20 + 360) % 360, 58, 20),
-    ];
+    // ── HSL to Hex ──
+    function hslToHex(h,s,l) {
+        l/=100; s/=100;
+        const a=s*Math.min(l,1-l);
+        const f=n=>{
+            const k=(n+h/30)%12;
+            const color=l-a*Math.max(Math.min(k-3,9-k,1),-1);
+            return Math.round(255*color).toString(16).padStart(2,'0');
+        };
+        return `#${f(0)}${f(8)}${f(4)}`;
+    }
 
-    document.body.style.background = `linear-gradient(135deg,${colors.join(',')})`;
-    document.body.style.backgroundSize = '400% 400%';
-    document.body.classList.add('has-image');
-}
+    // ── Background from prompt — EVERY prompt gets unique color ──
+    function setBackgroundFromPrompt(prompt) {
+        const p=prompt.toLowerCase();
+        let baseHue=null;
+        if(p.includes('ocean')||p.includes('sea')||p.includes('water')||p.includes('rain')||p.includes('blue')) baseHue=210;
+        else if(p.includes('fire')||p.includes('lava')||p.includes('desert')||p.includes('orange')) baseHue=25;
+        else if(p.includes('forest')||p.includes('nature')||p.includes('green')||p.includes('jungle')||p.includes('tree')) baseHue=140;
+        else if(p.includes('space')||p.includes('galaxy')||p.includes('star')||p.includes('cosmos')||p.includes('universe')) baseHue=260;
+        else if(p.includes('pink')||p.includes('rose')||p.includes('love')||p.includes('heart')||p.includes('flower')) baseHue=330;
+        else if(p.includes('purple')||p.includes('violet')||p.includes('magic')||p.includes('mystic')) baseHue=280;
+        else if(p.includes('snow')||p.includes('ice')||p.includes('winter')||p.includes('cold')||p.includes('frost')) baseHue=200;
+        else if(p.includes('blood')||p.includes('war')||p.includes('red')||p.includes('danger')||p.includes('crimson')) baseHue=0;
+        else if(p.includes('gold')||p.includes('yellow')||p.includes('sunny')||p.includes('sun')) baseHue=45;
+        else if(p.includes('night')||p.includes('dark')||p.includes('shadow')||p.includes('midnight')) baseHue=240;
+        else if(p.includes('dream')||p.includes('soul')||p.includes('mind')||p.includes('surreal')) baseHue=270;
+        // No keyword? Use hash — EVERY prompt gets its own unique color!
+        if(baseHue===null) baseHue=hashText(prompt)%360;
+        const colors=[
+            hslToHex(baseHue,60,18),
+            hslToHex((baseHue+20)%360,55,22),
+            hslToHex((baseHue+40)%360,50,16),
+            hslToHex((baseHue-20+360)%360,58,20),
+        ];
+        document.body.style.background=`linear-gradient(135deg,${colors.join(',')})`;
+        document.body.style.backgroundSize='400% 400%';
+        document.body.classList.add('has-image');
+    }
+
+    // ── Image loader with retry — keeps trying every 6s up to 10 times ──
+    function loadImageWithRetry(url, wrapId, alt, color, attempt=1) {
+        const maxAttempts=10;
+        const wrap=document.getElementById(wrapId);
+        if(!wrap) return;
+
+        // Show loading with attempt count
+        wrap.innerHTML=`
+            <div class="image-loading">
+                <div class="image-loading-spinner" style="border-top-color:${color}"></div>
+                <p>Generating image...</p>
+                <small>Attempt ${attempt}/${maxAttempts} · please wait</small>
+            </div>`;
+
+        const img=new Image();
+        img.onload=()=>{
+            const w=document.getElementById(wrapId);
+            if(w) w.innerHTML=`<img src="${url}" class="result-image" alt="${alt}">`;
+        };
+        img.onerror=()=>{
+            if(attempt<maxAttempts){
+                // Wait 6 seconds then retry
+                setTimeout(()=>loadImageWithRetry(url,wrapId,alt,color,attempt+1),6000);
+            } else {
+                const w=document.getElementById(wrapId);
+                if(w) w.innerHTML=`
+                    <div class="image-loading">
+                        <p>⏳ Taking longer than usual</p>
+                        <a href="${url}" target="_blank" class="retry-link" style="color:${color}">
+                            🔗 Open image in new tab
+                        </a>
+                    </div>`;
+            }
+        };
+        img.src=url+'&t='+Date.now();
+    }
 
     // ── MODE 1: Imagine It ──
     async function generateImage() {
-        const prompt = document.getElementById('imagine-input').value.trim();
-        if (!prompt) { document.getElementById('imagine-input').focus(); return; }
+        const prompt=document.getElementById('imagine-input').value.trim();
+        if(!prompt){document.getElementById('imagine-input').focus();return;}
         await runGenerate(prompt);
     }
 
     async function generateFromResult() {
-        const prompt = document.getElementById('imagine-input-result').value.trim();
-        if (!prompt) { document.getElementById('imagine-input-result').focus(); return; }
+        const prompt=document.getElementById('imagine-input-result').value.trim();
+        if(!prompt){document.getElementById('imagine-input-result').focus();return;}
         await runGenerate(prompt);
     }
 
     async function runGenerate(prompt) {
-        document.getElementById('imagine-form').style.display   = 'none';
-        document.getElementById('imagine-result').style.display = 'block';
-        document.getElementById('imagine-input-result').value   = prompt;
+        document.getElementById('imagine-form').style.display='none';
+        document.getElementById('imagine-result').style.display='block';
+        document.getElementById('imagine-input-result').value=prompt;
 
-        const btn = document.getElementById('imagine-btn-result');
-        if (btn) { btn.innerHTML = '<span class="spinner"></span> Creating...'; btn.disabled = true; }
+        const btn=document.getElementById('imagine-btn-result');
+        if(btn){btn.innerHTML='<span class="spinner"></span> Creating...';btn.disabled=true;}
 
-        // ✅ Writing to IMAGINE wrap — correct!
-        document.getElementById('imagine-image-wrap').innerHTML = `
+        document.getElementById('imagine-image-wrap').innerHTML=`
             <div class="image-loading">
                 <div class="image-loading-spinner spinner-imagine"></div>
                 <p>AI is enhancing your idea...</p>
-                <small>Takes 10–20 seconds</small>
+                <small>Takes 15–30 seconds</small>
             </div>`;
-        document.getElementById('imagine-enhanced-prompt').textContent = '';
+        document.getElementById('imagine-enhanced-prompt').textContent='';
 
         try {
-            const res  = await fetch('/generate', {
-                method:'POST', headers:{'Content-Type':'application/json'},
-                body: JSON.stringify({ prompt })
-            });
-            const data = await res.json();
-
-            if (data.success) {
-                document.getElementById('imagine-enhanced-prompt').textContent = '✨ ' + data.enhanced_prompt;
-                // Show image directly — don't wait for onload
-                const wrap = document.getElementById('imagine-image-wrap');
-                if (wrap) {
-                    wrap.innerHTML = `<img src="${data.image_url}" class="result-image" alt="Generated" 
-                        onerror="this.parentElement.innerHTML='<div class=\\'image-loading\\'><p>⏳ Image taking longer... <a href=\\'${data.image_url}\\' target=\\'_blank\\' style=\\'color:#5bc8e8\\'>Open directly</a></p></div>'"
-                    >`;
-                    setBackgroundFromPrompt(data.enhanced_prompt || '');
-                }
+            const res=await fetch('/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
+            const data=await res.json();
+            if(data.success){
+                document.getElementById('imagine-enhanced-prompt').textContent='✨ '+data.enhanced_prompt;
+                setBackgroundFromPrompt(data.enhanced_prompt||'');
+                // Use retry loader — keeps trying until image loads!
+                loadImageWithRetry(data.image_url,'imagine-image-wrap','Generated','#5bc8e8');
             } else {
-                document.getElementById('imagine-image-wrap').innerHTML =
-                    `<div class="image-loading"><p>❌ ${data.error}</p></div>`;
+                document.getElementById('imagine-image-wrap').innerHTML=`<div class="image-loading"><p>❌ ${data.error}</p></div>`;
             }
         } catch(e) {
-            document.getElementById('imagine-image-wrap').innerHTML =
-                `<div class="image-loading"><p>❌ Something went wrong!</p></div>`;
+            document.getElementById('imagine-image-wrap').innerHTML=`<div class="image-loading"><p>❌ Something went wrong!</p></div>`;
         }
 
-        if (btn) { btn.innerHTML = '🎨 Generate New'; btn.disabled = false; }
+        if(btn){btn.innerHTML='🎨 Generate New';btn.disabled=false;}
     }
 
     function resetImagine() {
-        document.getElementById('imagine-result').style.display = 'none';
-        document.getElementById('imagine-form').style.display   = 'block';
-        document.getElementById('imagine-input').value = '';
+        document.getElementById('imagine-result').style.display='none';
+        document.getElementById('imagine-form').style.display='block';
+        document.getElementById('imagine-input').value='';
         document.getElementById('imagine-input').focus();
-        document.body.className = 'mode-imagine';
-        document.body.style.background = '';
+        document.body.className='mode-imagine';
+        document.body.style.background='';
     }
 
     // ── MODE 2: Read My Mind ──
     async function analyzeMind() {
-        document.getElementById('psych-questions').style.display = 'none';
-        document.getElementById('psych-result').style.display    = 'block';
-        document.getElementById('personality-box').style.display = 'none';
-        document.getElementById('psych-prompt').textContent      = '';
-
-        // ✅ Writing to PSYCH wrap — correct!
-        document.getElementById('psych-image-wrap').innerHTML = `
+        document.getElementById('psych-questions').style.display='none';
+        document.getElementById('psych-result').style.display='block';
+        document.getElementById('personality-box').style.display='none';
+        document.getElementById('psych-prompt').textContent='';
+        document.getElementById('psych-image-wrap').innerHTML=`
             <div class="image-loading">
                 <div class="image-loading-spinner spinner-psych"></div>
                 <p>Reading your mind...</p>
@@ -469,42 +405,28 @@ function setBackgroundFromPrompt(prompt) {
             </div>`;
 
         try {
-            const res  = await fetch('/analyze', {
-                method:'POST', headers:{'Content-Type':'application/json'},
-                body: JSON.stringify({
-                    questions: selectedQuestions.slice(0, answers.length),
-                    answers
-                })
-            });
-            const data = await res.json();
-
-            if (data.success) {
-                document.getElementById('personality-text').textContent = data.personality;
-                document.getElementById('personality-box').style.display = 'block';
-                document.getElementById('psych-prompt').textContent = '🎨 ' + data.image_prompt;
-
-                const wrap = document.getElementById('psych-image-wrap');
-                if (wrap) {
-                    wrap.innerHTML = `<img src="${data.image_url}" class="result-image" alt="Your Mind"
-                        onerror="this.parentElement.innerHTML='<div class=\\'image-loading\\'><p>⏳ Image taking longer... <a href=\\'${data.image_url}\\' target=\\'_blank\\' style=\\'color:#e87aaa\\'>Open directly</a></p></div>'"
-                    >`;
-                    setBackgroundFromPrompt(data.image_prompt || '');
-                }
+            const res=await fetch('/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({questions:selectedQuestions.slice(0,answers.length),answers})});
+            const data=await res.json();
+            if(data.success){
+                document.getElementById('personality-text').textContent=data.personality;
+                document.getElementById('personality-box').style.display='block';
+                document.getElementById('psych-prompt').textContent='🎨 '+data.image_prompt;
+                setBackgroundFromPrompt(data.image_prompt||'');
+                // Use retry loader — keeps trying until image loads!
+                loadImageWithRetry(data.image_url,'psych-image-wrap','Your Mind','#e87aaa');
             } else {
-                document.getElementById('psych-image-wrap').innerHTML =
-                    `<div class="image-loading"><p>❌ ${data.error}</p></div>`;
+                document.getElementById('psych-image-wrap').innerHTML=`<div class="image-loading"><p>❌ ${data.error}</p></div>`;
             }
         } catch(e) {
-            document.getElementById('psych-image-wrap').innerHTML =
-                `<div class="image-loading"><p>❌ Something went wrong!</p></div>`;
+            document.getElementById('psych-image-wrap').innerHTML=`<div class="image-loading"><p>❌ Something went wrong!</p></div>`;
         }
     }
 
     function resetPsych() {
-        document.getElementById('psych-result').style.display    = 'none';
-        document.getElementById('psych-questions').style.display = 'block';
-        document.body.className = 'mode-psych';
-        document.body.style.background = '';
+        document.getElementById('psych-result').style.display='none';
+        document.getElementById('psych-questions').style.display='block';
+        document.body.className='mode-psych';
+        document.body.style.background='';
         initQuestions();
     }
 
