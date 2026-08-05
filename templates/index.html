@@ -371,7 +371,8 @@
                 document.getElementById('imagine-enhanced-prompt').textContent='✨ '+data.enhanced_prompt;
                 setBackgroundFromPrompt(data.enhanced_prompt||'');
                 // Use retry loader — keeps trying until image loads!
-                loadImageWithRetry(data.image_url,'imagine-image-wrap','Generated','#5bc8e8');
+                const wrap=document.getElementById('imagine-image-wrap');
+if(wrap) wrap.innerHTML=`<img src="${data.image_data}" class="result-image" alt="Generated">`;
             } else {
                 document.getElementById('imagine-image-wrap').innerHTML=`<div class="image-loading"><p>❌ ${data.error}</p></div>`;
             }
@@ -413,7 +414,8 @@
                 document.getElementById('psych-prompt').textContent='🎨 '+data.image_prompt;
                 setBackgroundFromPrompt(data.image_prompt||'');
                 // Use retry loader — keeps trying until image loads!
-                loadImageWithRetry(data.image_url,'psych-image-wrap','Your Mind','#e87aaa');
+                const wrap=document.getElementById('psych-image-wrap');
+if(wrap) wrap.innerHTML=`<img src="${data.image_data}" class="result-image" alt="Your Mind">`;
             } else {
                 document.getElementById('psych-image-wrap').innerHTML=`<div class="image-loading"><p>❌ ${data.error}</p></div>`;
             }
